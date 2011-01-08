@@ -1,15 +1,18 @@
 var firereader = {
   onLoad: function() {
+  alert("onload");
     // initialization code
     this.initialized = true;
     this.strings = document.getElementById("firereader-strings");
+    var appcontent = document.getElementById("appcontent");   // browser
+    appcontent.addEventListener("DOMContentLoaded", fireReaderUtil.pageLoad, false);
+
   },
 
   onMenuItemCommand: function(e) {
     var promptService = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
                                   .getService(Components.interfaces.nsIPromptService);
-    promptService.alert(window, this.strings.getString("helloMessageTitle"),
-                                this.strings.getString("helloMessage"));
+    promptService.alert(window, this.strings.getString("helloMessageTitle"), this.strings.getString("helloMessage"));
   },
 
   onToolbarButtonCommand: function(e) {
@@ -64,7 +67,7 @@ var fireReaderUtil = {
 
 	},
 	addElements: function(){
-			alert("add elements");
+		alert("add elements");
 
 	    content.document.body.addEventListener("click", fireReaderUtil.leftClick, false); 
 	   
@@ -114,7 +117,13 @@ var fireReaderUtil = {
 	rightClick: function(e)
 	{
 	},
-
+	pageLoad: function()
+	{
+		if(fireReaderUtil.isReading && content.document.getElementById("reader") == null)
+		{
+			fireReaderUtil.addElements();
+		}
+	}
 	init: function()
 	{
 		if(!fireReaderUtil.isReading)
@@ -126,7 +135,6 @@ var fireReaderUtil = {
 			fireReaderUtil.removeElements();
 		}
 	}
-	
 
 }
 
@@ -141,3 +149,5 @@ function getEvent(e) {
 
 window.addEventListener("contextmenu", fireReaderUtil.rightClick, false); 
 window.addEventListener("load", firereader.onLoad, false);
+//content.document.body.addEventListener("load", fireReaderUtil.init, false);
+content.document.addEventListener("DOMContentLoaded", fireReaderUtil.init, true);
