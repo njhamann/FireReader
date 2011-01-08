@@ -19,8 +19,11 @@ var firereader = {
 };
 
 var fireReaderUtil = {
+
 	isOn: false,
+
 	isReading: false,
+
 	turnOn: function(e){
 		var bodyEle = content.document.body;
 
