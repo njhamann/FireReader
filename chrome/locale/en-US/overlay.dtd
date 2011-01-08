@@ -1,0 +1,8 @@
+<!ENTITY firereader.label "FireReader">
+<!ENTITY firereaderContext.label "Start FireReader">
+<!ENTITY firereaderContext.accesskey "Y">
+<!ENTITY firereaderToolbarButton.label "Your Toolbar Button">
+<!ENTITY firereaderToolbarButton.tooltip "This is your toolbar button!">
+<!ENTITY firereaderSidebar.label "Your Sidebar">
+<!ENTITY firereaderToolbar.name  "example">
+<!ENTITY firereaderToolbar.label "This is an example toolbar. You can hide it under View &gt; toolbars &gt; &firereaderToolbar.name;">

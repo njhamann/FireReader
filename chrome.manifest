@@ -1,0 +1,6 @@
+content   firereader                 chrome/content/
+skin      firereader   classic/1.0   chrome/skin/
+locale    firereader   en-US         chrome/locale/en-US/
+
+
+overlay   chrome://browser/content/browser.xul   chrome://firereader/content/ff-overlay.xul

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://firereader/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://firereader/locale/overlay.dtd">
+<overlay id="firereader-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="overlay.js"/>
+  <script src="ff-overlay.js"/>
+
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="firereader-strings" src="chrome://firereader/locale/overlay.properties"/>
+  </stringbundleset>
+
+  <menupopup id="menu_ToolsPopup">
+    <menuitem id="firereader-hello" label="&firereader.label;"
+              oncommand="firereader.onMenuItemCommand(event);"/>
+  </menupopup>
+
+  <popup id="contentAreaContextMenu">
+    <menuitem id="context-firereader" label="&firereaderContext.label;"
+              accesskey="&firereaderContext.accesskey;"
+              insertafter="context-stop"
+              oncommand="fireReaderUtil.init(event)"/>
+  </popup>
+
+
+
+
+</overlay>
