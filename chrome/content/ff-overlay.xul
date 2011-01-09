@@ -18,7 +18,7 @@
     <menuitem id="context-firereader" label="&firereaderContext.label;"
               accesskey="&firereaderContext.accesskey;"
               insertafter="context-stop"
-              oncommand="fireReaderUtil.init(event)"/>
+              oncommand="fireReaderUtil.init()"/>
   </popup>
 
 

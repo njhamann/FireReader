@@ -1,12 +1,9 @@
 var firereader = {
   onLoad: function() {
-  alert("onload");
+  //alert("onload");
     // initialization code
     this.initialized = true;
     this.strings = document.getElementById("firereader-strings");
-    var appcontent = document.getElementById("appcontent");   // browser
-    appcontent.addEventListener("DOMContentLoaded", fireReaderUtil.pageLoad, false);
-
   },
 
   onMenuItemCommand: function(e) {
@@ -28,12 +25,15 @@ var fireReaderUtil = {
 	isReading: false,
 
 	turnOn: function(e){
+	//alert(content.document.getElementById("reader"));
+		if(content.document.getElementById("reader") == null)
+		{
+			fireReaderUtil.addElements();
+		}
+		
 		var bodyEle = content.document.body;
-
 		var htmlEle = getEvent(e).target;
-
 		var readerEle = content.document.getElementById("reader");
-
 		var fadeEle = content.document.getElementById("bodyFade");
 		var newHTML = htmlEle.parentNode.parentNode.innerHTML;
 		var bodyInnerHTML = bodyEle.innerHTML;
@@ -103,7 +103,7 @@ var fireReaderUtil = {
 	},
 	leftClick: function(e)
 	{
-		alert("left click");
+		alert(fireReaderUtil.isOn);
 
 		if(!fireReaderUtil.isOn)
 		{
@@ -117,15 +117,26 @@ var fireReaderUtil = {
 	rightClick: function(e)
 	{
 	},
-	pageLoad: function()
+	pageLoad: function(aEvent)
 	{
-		if(fireReaderUtil.isReading && content.document.getElementById("reader") == null)
+		fireReaderUtil.isOn = false;
+		if ((aEvent.originalTarget.nodeName == '#document') && (aEvent.originalTarget.defaultView.location.href == gBrowser.currentURI.spec)) 
+    	{
+        	content.document.body.addEventListener("click", fireReaderUtil.leftClick, false); 
+
+    	}
+	
+	
+	/*
+		if(fireReaderUtil.isReading && content.document.getElementById("reader") == 'undefined')
 		{
-			fireReaderUtil.addElements();
+
 		}
-	}
+		*/
+	},
 	init: function()
 	{
+		alert("init");
 		if(!fireReaderUtil.isReading)
 		{
 			fireReaderUtil.addElements();
@@ -147,7 +158,25 @@ function getEvent(e) {
   	return event;
 }
 
+//content.document.addEventListener('load', fireReaderUtil.pageLoad, false);
+//gBrowser.addEventListener("load", fireReaderUtil.pageLoad, true);
 window.addEventListener("contextmenu", fireReaderUtil.rightClick, false); 
 window.addEventListener("load", firereader.onLoad, false);
 //content.document.body.addEventListener("load", fireReaderUtil.init, false);
-content.document.addEventListener("DOMContentLoaded", fireReaderUtil.init, true);
+
+
+
+
+
+    var gBrowser = window.gBrowser;
+    if (gBrowser.addEventListener) {
+        gBrowser.addEventListener("load",fireReaderUtil.pageLoad,true);
+    } 
+
+
+
+
+
+
+
+
