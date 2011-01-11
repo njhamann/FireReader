@@ -25,7 +25,6 @@ var fireReaderUtil = {
 	isReading: false,
 	currentEle: null,
 	turnOn: function(e){
-	//alert(content.document.getElementById("reader"));
 		var htmlEle = fireReaderUtil.currentEle;
 		var newHTML = null;
 		if(htmlEle.nodeName == "P")
