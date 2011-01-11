@@ -23,19 +23,38 @@ var fireReaderUtil = {
 	isOn: false,
 
 	isReading: false,
-
+	currentEle: null,
 	turnOn: function(e){
 	//alert(content.document.getElementById("reader"));
+		var htmlEle = fireReaderUtil.currentEle;
+		var newHTML = null;
+		if(htmlEle.nodeName == "P")
+		{
+			newHTML = htmlEle.parentNode.innerHTML;
+		}
+		else if(htmlEle.parentNode.nodeName == "P")
+		{
+			newHTML = htmlEle.parentNode.parentNode.innerHTML;
+		}
+		else if(htmlEle.parentNode.parentNode.nodeName == "P")
+		{
+			newHTML = htmlEle.parentNode.parentNode.parentNode.innerHTML;
+		}
+		else
+		{
+			newHTML = htmlEle.parentNode.parentNode.innerHTML;
+		}
+		
+		//alert(htmlEle.nodeName+", "+htmlEle.parentNode.nodeName+", "+htmlEle.parentNode.parentNode.nodeName);
 		if(content.document.getElementById("reader") == null)
 		{
 			fireReaderUtil.addElements();
 		}
 		
 		var bodyEle = content.document.body;
-		var htmlEle = getEvent(e).target;
 		var readerEle = content.document.getElementById("reader");
 		var fadeEle = content.document.getElementById("bodyFade");
-		var newHTML = htmlEle.parentNode.parentNode.innerHTML;
+		//var newHTML = htmlEle.parentNode.parentNode.innerHTML;
 		var bodyInnerHTML = bodyEle.innerHTML;
 
 	  	fadeEle.style.display = "block";
@@ -56,19 +75,18 @@ var fireReaderUtil = {
 	elementStyles: function(){
 		var h = content.document.height;
 		var w = window.innerWidth;
-	    var centerNum = (w/2)-(420/2);
+	    var centerNum = (w/2)-(520/2);
 		var scrollNum = content.document.documentElement.scrollTop;
 		
 		var readerEle = content.document.getElementById("reader");
 		var fadeEle = content.document.getElementById("bodyFade");
-		fadeEle.setAttribute('style','z-index:900; display:none; top:0; left:0; background:#FFF; opacity:0.9; position:absolute; width:'+w+'px; height:'+h+'px');
-		readerEle.setAttribute('style','z-index:901; display:none; color:#000; position:absolute; padding:10px; width:400px; top:20px; left:'+centerNum+'px; background:#FFFFFF;');
+		fadeEle.setAttribute('style','z-index:9999; display:none; top:0; left:0; background:#FFF; opacity:0.9; position:absolute; width:'+w+'px; height:'+h+'px');
+		readerEle.setAttribute('style','text-align:left; z-index:9999; display:none; color:#000; position:absolute; padding:10px; width:500px; top:20px; left:'+centerNum+'px; background:#FFFFFF;');
 
 	},
 	addElements: function(){
-		alert("add elements");
 
-	    content.document.body.addEventListener("click", fireReaderUtil.leftClick, false); 
+	    //content.document.body.addEventListener("click", fireReaderUtil.leftClick, false); 
 	   
 	    document.getElementById("context-firereader").setAttribute("label", "Stop FireReader");
 
@@ -87,7 +105,7 @@ var fireReaderUtil = {
 	    
 	},
 	removeElements: function(){
-	   	content.document.body.removeEventListener("click", fireReaderUtil.leftClick, false); 
+	   	//content.document.body.removeEventListener("click", fireReaderUtil.leftClick, false); 
 
 	 	document.getElementById("context-firereader").setAttribute("label", "Start FireReader");
 
@@ -114,28 +132,31 @@ var fireReaderUtil = {
 	},
 	rightClick: function(e)
 	{
+		fireReaderUtil.currentEle = getEvent(e).target;
 	},
 	pageLoad: function(aEvent)
 	{
-		fireReaderUtil.isOn = false;
-		if(fireReaderUtil.isOn)
+		//fireReaderUtil.isOn = false;
+		if(fireReaderUtil.isOn && fireReaderUtil.isReading)
 		{
 			if ((aEvent.originalTarget.nodeName == '#document') && (aEvent.originalTarget.defaultView.location.href == gBrowser.currentURI.spec)) 
 	    	{
-	        	content.document.body.addEventListener("click", fireReaderUtil.leftClick, false); 
+	    		fireReaderUtil.isOn = false;
+	    		fireReaderUtil.isReading = false;
+	    		document.getElementById("context-firereader").setAttribute("label", "Start FireReader");
+
+	        	//content.document.body.addEventListener("click", fireReaderUtil.leftClick, false); 
 	
 	    	}
     	}
-	
-	
-
 	},
 	init: function()
 	{
-		alert("init");
+		//alert("init");
 		if(!fireReaderUtil.isReading)
 		{
 			fireReaderUtil.addElements();
+			fireReaderUtil.turnOn();
 		}
 		else
 		{
