@@ -54,7 +54,6 @@ var fireReaderUtil = {
 	  	fireReaderUtil.isOn = false;
 	},
 	elementStyles: function(){
-		alert("element styles");
 		var h = content.document.height;
 		var w = window.innerWidth;
 	    var centerNum = (w/2)-(420/2);
@@ -62,8 +61,8 @@ var fireReaderUtil = {
 		
 		var readerEle = content.document.getElementById("reader");
 		var fadeEle = content.document.getElementById("bodyFade");
-		fadeEle.setAttribute('style','display:none; top:0; left:0; background:#FFF; opacity:0.9; position:absolute; width:'+w+'px; height:'+h+'px');
-		readerEle.setAttribute('style','display:none; color:#000; position:absolute; padding:10px; width:400px; top:20px; left:'+centerNum+'px; background:#FFFFFF;');
+		fadeEle.setAttribute('style','z-index:900; display:none; top:0; left:0; background:#FFF; opacity:0.9; position:absolute; width:'+w+'px; height:'+h+'px');
+		readerEle.setAttribute('style','z-index:901; display:none; color:#000; position:absolute; padding:10px; width:400px; top:20px; left:'+centerNum+'px; background:#FFFFFF;');
 
 	},
 	addElements: function(){
@@ -103,7 +102,6 @@ var fireReaderUtil = {
 	},
 	leftClick: function(e)
 	{
-		alert(fireReaderUtil.isOn);
 
 		if(!fireReaderUtil.isOn)
 		{
@@ -120,19 +118,17 @@ var fireReaderUtil = {
 	pageLoad: function(aEvent)
 	{
 		fireReaderUtil.isOn = false;
-		if ((aEvent.originalTarget.nodeName == '#document') && (aEvent.originalTarget.defaultView.location.href == gBrowser.currentURI.spec)) 
-    	{
-        	content.document.body.addEventListener("click", fireReaderUtil.leftClick, false); 
-
+		if(fireReaderUtil.isOn)
+		{
+			if ((aEvent.originalTarget.nodeName == '#document') && (aEvent.originalTarget.defaultView.location.href == gBrowser.currentURI.spec)) 
+	    	{
+	        	content.document.body.addEventListener("click", fireReaderUtil.leftClick, false); 
+	
+	    	}
     	}
 	
 	
-	/*
-		if(fireReaderUtil.isReading && content.document.getElementById("reader") == 'undefined')
-		{
 
-		}
-		*/
 	},
 	init: function()
 	{
